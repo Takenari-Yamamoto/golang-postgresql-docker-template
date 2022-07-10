@@ -1,28 +1,47 @@
-package main // mainパッケージであることを宣言
+// mainパッケージであることを宣言
+// ちなみにパッケージの宣言は 1つまでしかできない
+package main
 
-import "fmt" // fmtモジュールをインポート
+// fmtモジュールをインポート
+import "fmt"
 
-func main() {		// 最初に実行されるmain()関数を定義
+func outer() {
+	var s4 string = "outerやで！"
+	fmt.Println(s4)
+}
 
-	// コンパイル時に個数が決まっていて変更不可なものを配列という（array）
-	// a1 := [3]string{}
-	// a1[0] = "ggg"
-	// a1[1] = "ggggg"
-	// a1[2] = "rwerwerwe"
-	// fmt.Println(a1)
+func main() {
+	var i int = 100
+	fmt.Println(i)
 
-	// メモリ効率や速度は若干落ちますが、個数を変更可能なものを スライス と呼びます。
-	// s1 := []string{}
-	// s1 = append(s1, "Red")
-	// s1 = append(s1, "Blue")
-	// s1 = append(s1, "Yellow")
-	// fmt.Println(len(s1))
-	// fmt.Println(cap(s1))
+	var s string = "Hello World"
+	fmt.Println(s)
 
-	m1 := map[string]int {
-		"x": 100,
-		"y": 200,
-	}
+	var t, f bool = true, false
+	fmt.Println(t, f)
 
-	fmt.Println(m1["x"])
+	var (
+		i2 int = 100
+		a2 string = "Golang"
+	)
+
+	fmt.Println(i2, a2)
+
+	// 初期値がない時は0が返る
+	var i3 int
+	var s3 string
+	fmt.Println(i3, s3)
+
+	i3 = 300
+	s3 = "GOGOGOGO"
+	fmt.Println(i3, s3)
+
+	i4 := 666
+	fmt.Println(i4)
+
+	i4 = 342134
+	fmt.Println(i4)
+
+	outer()
+
 }
