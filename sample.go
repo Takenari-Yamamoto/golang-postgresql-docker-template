@@ -7,13 +7,18 @@ import "fmt"
 // fmtモジュールをインポート
 
 func main() {
-	byteA := []byte{ 72, 73 }
-	fmt.Println(byteA)
+	var arr1 [3]int
+	fmt.Println(arr1)
+	fmt.Printf("%T\n",arr1)
 
-	// Byte to String
-	fmt.Println(string(byteA))
+	var arr2 [3] string = [3]string{"A","B"}
+	fmt.Println(arr2)
 
-	// String to Byte
-	c := [] byte("HI")
-	fmt.Println(c)
+	arr3 := [3]int{1,2,3}
+	fmt.Println(arr3)
+
+	arr4 := [...]string{ "C", "D" }
+	fmt.Println(arr4)
+
+	fmt.Println(arr3[0])
 }
