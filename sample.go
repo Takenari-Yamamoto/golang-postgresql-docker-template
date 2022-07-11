@@ -7,14 +7,13 @@ import "fmt"
 // fmtモジュールをインポート
 
 func main() {
-	var s string = "Hello golang"
-	fmt.Println(s)
-	fmt.Printf("%T\n", s)
+	byteA := []byte{ 72, 73 }
+	fmt.Println(byteA)
 
-	fmt.Println(`test
-		test
-	test
-	`)
+	// Byte to String
+	fmt.Println(string(byteA))
 
-	fmt.Println(string(s[0]))
+	// String to Byte
+	c := [] byte("HI")
+	fmt.Println(c)
 }
