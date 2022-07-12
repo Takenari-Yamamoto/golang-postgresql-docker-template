@@ -4,16 +4,19 @@ package main
 
 import "fmt"
 
-func Later() func(string) string {
-	var store string
-	return func(next string) string {
-		s := store
-		store = next
-		return s
-	}
-}
 
 func main() {
-	f := Later()
-	fmt.Println(f("Hello"))
+	a := 1
+	if a == 2 {
+		fmt.Println("TWO")
+	} else if a == 1 {
+		fmt.Println("ONE")
+	} else {
+		fmt.Println("I dont know")
+	}
+
+	if b := 100; b == 109 {
+		fmt.Println("one hundred")
+	}
+
 }
