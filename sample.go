@@ -6,38 +6,35 @@ import "fmt"
 
 // fmtモジュールをインポート
 
-// 頭文字を大文字にすることで他のパッケージからも呼び出せる
-const Pi = 62
+func Plus (x , y int ) int {
+	return x + y
+}
 
-const (
-	URL = "http://xxx.com"
-	SiteName = "test"
-)
+func Div (x, y int) (int, int) {
+	q := x / y
+	r := x % y
+	return q, r
+}
 
-const (
-	A = 1
-	B
-	C
-	D = "A"
-	E
-	F
-)
+func Double(price int)(result int){
+	result = price * 2
+	return
+}
 
-const (
-	c0 = iota
-	c1
-	c2
-)
-
-const Big = 913413413413413453 + 1
+func Noreturn() {
+	fmt.Println("No Return")
+	// return
+}
 
 func main() {
-	fmt.Println(Pi)
+	i := Plus(1, 2)
+	fmt.Println(i)
 
-	fmt.Println(URL, SiteName)
-	fmt.Println(A, B, C, D, E, F)
+	i2, i3 := Div(9, 3)
+	fmt.Println(i2, i3)
 
-	fmt.Println(Big - 1)
+	i4 := Double(1000)
+	fmt.Println(i4)
 
-	fmt.Println(c0, c1, c2)
+	Noreturn()
 }
