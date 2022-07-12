@@ -4,15 +4,20 @@ package main
 
 import "fmt"
 
-func main() {
-	f := func(x, y int) int {
-		return x + y
-	}
-	i := f(1, 2)
-	fmt.Println(i)
+// func ReturnFunc() func() {
+// 	return func() {
+// 		fmt.Println("I am a function")
+// 	}
+// }
 
-	i2 := func(x, y int) int {
-		return x + y
-	}(1, 2)
-	fmt.Println(i2)
+func CallFunction (f func()) {
+	f()
+}
+
+func main() {
+	// f := ReturnFunc()
+	// f()
+	CallFunction(func() {
+		fmt.Println("I AM A FUNC")
+	})
 }
