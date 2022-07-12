@@ -4,20 +4,16 @@ package main
 
 import "fmt"
 
-// func ReturnFunc() func() {
-// 	return func() {
-// 		fmt.Println("I am a function")
-// 	}
-// }
-
-func CallFunction (f func()) {
-	f()
+func Later() func(string) string {
+	var store string
+	return func(next string) string {
+		s := store
+		store = next
+		return s
+	}
 }
 
 func main() {
-	// f := ReturnFunc()
-	// f()
-	CallFunction(func() {
-		fmt.Println("I AM A FUNC")
-	})
+	f := Later()
+	fmt.Println(f("Hello"))
 }
