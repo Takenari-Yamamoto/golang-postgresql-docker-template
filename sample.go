@@ -4,28 +4,22 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"time"
 )
 
-// func TestDefer() {
-// 	defer fmt.Println("END")
-// 	fmt.Println("START")
-// }
-
-func RunDefer () {
-	defer fmt.Println(1)
-	defer fmt.Println(2)
-	defer fmt.Println(3)
+func sub() {
+	for {
+		fmt.Println("Sub Loop")
+		time.Sleep(100 * time.Millisecond)
+	}
 }
 
 func main() {
-	RunDefer()
+	go sub()
+	go sub()
 
-	file, err := os.Create("text.txt")
-
-	if err != nil {
-		fmt.Println(err)
+	for {
+		fmt.Println("Main Loop")
+		time.Sleep(200 * time.Millisecond)
 	}
-	defer file.Close()
-	file.Write([]byte("Hello"))
 }
