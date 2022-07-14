@@ -2,21 +2,28 @@
 // ちなみにパッケージの宣言は 1つまでしかできない
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 
 func main() {
-	a := 1
-	if a == 2 {
-		fmt.Println("TWO")
-	} else if a == 1 {
-		fmt.Println("ONE")
-	} else {
-		fmt.Println("I dont know")
-	}
+	// i := 0
+	// for  {
+	// 	i++
+	// 	if i == 3 {
+	// 		break
+	// 	}
+	// 	fmt.Println("Loop")
+	// }
 
-	if b := 100; b == 109 {
-		fmt.Println("one hundred")
-	}
+	// point := 0
+	// for point < 10 {
+	// 	fmt.Println(point)
+	// 	point++
+	// }
 
+	for i := 0; i < 10; i++ {
+		fmt.Println(i)
+	}
 }
