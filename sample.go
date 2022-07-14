@@ -2,24 +2,15 @@
 // ちなみにパッケージの宣言は 1つまでしかできない
 package main
 
-import (
-	"fmt"
-	"time"
-)
+import "fmt"
 
-func sub() {
-	for {
-		fmt.Println("Sub Loop")
-		time.Sleep(100 * time.Millisecond)
-	}
+func init() {
+	fmt.Println("init")
+}
+func init() {
+	fmt.Println("init2")
 }
 
 func main() {
-	go sub()
-	go sub()
-
-	for {
-		fmt.Println("Main Loop")
-		time.Sleep(200 * time.Millisecond)
-	}
+	fmt.Println("Main")
 }
