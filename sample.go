@@ -4,26 +4,28 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
+// func TestDefer() {
+// 	defer fmt.Println("END")
+// 	fmt.Println("START")
+// }
+
+func RunDefer () {
+	defer fmt.Println(1)
+	defer fmt.Println(2)
+	defer fmt.Println(3)
+}
 
 func main() {
-	// i := 0
-	// for  {
-	// 	i++
-	// 	if i == 3 {
-	// 		break
-	// 	}
-	// 	fmt.Println("Loop")
-	// }
+	RunDefer()
 
-	// point := 0
-	// for point < 10 {
-	// 	fmt.Println(point)
-	// 	point++
-	// }
+	file, err := os.Create("text.txt")
 
-	for i := 0; i < 10; i++ {
-		fmt.Println(i)
+	if err != nil {
+		fmt.Println(err)
 	}
+	defer file.Close()
+	file.Write([]byte("Hello"))
 }
