@@ -7,27 +7,26 @@ type User struct {
 	Age int
 }
 
-type Users []*User
-
 func main() {
-	user1 := User{Name: "user1", Age: 10}
-	user2 := User{Name: "user2", Age: 20}
-	user3 := User{Name: "user3", Age: 30}
-	user4 := User{Name: "user4", Age: 40}
+	m := map[int]User {
+		1: {Name: "user1", Age: 10},
+		2: {Name: "user2", Age: 20},
+	}
+	fmt.Println(m)
 
-	users := Users{}
-	users = append(users, &user1)
-	users = append(users, &user2)
-	users = append(users, &user3, &user4)
+	m2 := map[User]string {
+		{Name: "user1", Age: 10}: "Tokyo",
+		{Name: "user2", Age: 20}: "LA",
+	}
+	fmt.Println(m2)
 
-	for _, u := range users {
-		fmt.Println(*u)
+	m3 := make(map[int]User)
+	fmt.Println(m3)
+	m3[1] = User{Name: "user3"}
+	fmt.Println(m3)
+
+	for _, v := range m {
+		fmt.Println(v)
 	}
 
-	users2 := make([]*User, 0)
-	users2 = append(users2, &user1, &user2)
-
-	for _, u := range users2 {
-		fmt.Println(*u)
-	}
 }
