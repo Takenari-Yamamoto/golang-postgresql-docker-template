@@ -7,50 +7,34 @@ type User struct {
 	Age int
 }
 
-func UpdateUser (user User) {
-	user.Name = "A"
-	user.Age = 1000
+// レシーバー宣言
+func (u User) SayName() {
+	fmt.Println(u.Name)
 }
 
-func UpdateUser2 (user *User) {
-	user.Name = "A"
-	user.Age = 1000
+func (u User) SayAge() {
+	fmt.Println(u.Age)
+}
+
+func (u User) SetName(name string) {
+	u.Name = name
+}
+
+func (u *User) SetName2(name string) {
+	u.Name = name
 }
 
 func main() {
-	var user1 User
+	user1 := User{Name: "user1"}
+	user1.SayName()
 
-	user1.Name = "Takenari"
-	user1.Age = 24
-	fmt.Println(user1)
+	user1.SetName("A")
+	user1.SayName()
 
-	user2 := User{}
-	user2.Name = "Bob"
-	fmt.Println(user2)
+	user1.SetName2("HOGEHOGEHOGE")
+	user1.SayName()
 
-	user3 := User{Name: "user3", Age: 34}
-	fmt.Println(user3)
-
-	user4 := User{"Sake", 20}
-	fmt.Println(user4)
-
-	user5 := User{ "user5", 300}
-	fmt.Println(user5)
-
-	user6 := User{Name: "user6"}
-	fmt.Println(user6)
-
-	// ポインタ型で変数定義する方法①
-	user7 := new(User)
-	fmt.Println(user7)
-
-	// ポインタ型で変数定義する方法②
-	user8 := &User{}
-	fmt.Println(user8)
-
-	UpdateUser(user1)
-	UpdateUser2(user8)
-	fmt.Println(user1)
-	fmt.Println(user8)
-
+	user2 := &User{Name: "user2"}
+	user2.SetName("BB")
+	user2.SayName()
 }
