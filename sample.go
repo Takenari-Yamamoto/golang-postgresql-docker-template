@@ -1,20 +1,18 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
 )
 
 func main() {
+	f, _ := os.Open("foo.txt");
+	bs, _ := ioutil.ReadAll(f)
+	fmt.Println(string(bs))
 
-	scanner := bufio.NewScanner(os.Stdin)
-
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
-	}
-
-	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "読み込みエラー: ", err)
+	if err := ioutil.WriteFile("bar.txt", bs, 0666); err != nil {
+		log.Fatalln(err)
 	}
 }
