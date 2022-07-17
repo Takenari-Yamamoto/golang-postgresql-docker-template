@@ -1,26 +1,46 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
 	"log"
-	"net/http"
-	"text/template"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
-// type MyHandler struct{}
+var Db *sql.DB
 
-// func (h *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-// 	fmt.Fprintf(w, "Hello World")
-// }
-
-func top(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("tmpl.html")
-	if err != nil {
-		log.Println(err)
-	}
-	t.Execute(w, "Hello World 123!!!")
+type Person struct {
+	Name string
+	Age int
 }
 
 func main() {
-	http.HandleFunc("/top", top)
-	http.ListenAndServe(":8080", nil)
+
+	Db, _ := sql.Open("sqlite3", "./example.sql")
+	defer Db.Close()
+
+	// cmd := "INSERT INTO persons (name, age) VALUES (?, ?)"
+	// _, err := Db.Exec(cmd, "hanako", 19)
+
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// }
+
+	cmd := "SELECT * FROM persons where age = ?"
+	row := Db.QueryRow(cmd, 25)
+	var p Person
+	err := row.Scan(&p.Name, &p.Age)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			log.Println("No row")
+		} else {
+			log.Println(err)
+		}
+	}
+
+	fmt.Println(p.Name, p.Age)
+
+
 }
