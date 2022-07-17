@@ -1,0 +1,46 @@
+2022-07-17 17:22:30.312 JST [29853] LOG:  starting PostgreSQL 14.4 on x86_64-apple-darwin21.5.0, compiled by Apple clang version 13.1.6 (clang-1316.0.21.2.5), 64-bit
+2022-07-17 17:22:30.313 JST [29853] LOG:  listening on IPv6 address "::1", port 5432
+2022-07-17 17:22:30.313 JST [29853] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2022-07-17 17:22:30.314 JST [29853] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2022-07-17 17:22:30.317 JST [29854] LOG:  database system was shut down at 2022-07-17 17:21:36 JST
+2022-07-17 17:22:30.321 JST [29853] LOG:  database system is ready to accept connections
+2022-07-17 17:22:39.195 JST [29958] FATAL:  database "takenariyamamoto" does not exist
+2022-07-17 17:23:36.621 JST [31386] FATAL:  database "takenariyamamoto" does not exist
+2022-07-17 17:25:01.712 JST [29853] LOG:  could not open file "postmaster.pid": No such file or directory
+2022-07-17 17:25:01.712 JST [29853] LOG:  performing immediate shutdown because data directory lock file is invalid
+2022-07-17 17:25:01.712 JST [29853] LOG:  received immediate shutdown request
+2022-07-17 17:25:01.712 JST [29853] LOG:  could not open file "postmaster.pid": No such file or directory
+2022-07-17 17:25:01.716 JST [29853] LOG:  database system is shut down
+2022-07-17 17:36:50.242 JST [37594] FATAL:  lock file "postmaster.pid" already exists
+2022-07-17 17:36:50.242 JST [37594] HINT:  Is another postmaster (PID 37488) running in data directory "/usr/local/var/postgres"?
+2022-07-17 17:41:16.198 JST [39712] LOG:  starting PostgreSQL 14.4 on x86_64-apple-darwin21.5.0, compiled by Apple clang version 13.1.6 (clang-1316.0.21.2.5), 64-bit
+2022-07-17 17:41:16.200 JST [39712] LOG:  could not bind IPv6 address "::1": Address already in use
+2022-07-17 17:41:16.200 JST [39712] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-07-17 17:41:16.200 JST [39712] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2022-07-17 17:41:16.200 JST [39712] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-07-17 17:41:16.200 JST [39712] WARNING:  could not create listen socket for "localhost"
+2022-07-17 17:41:16.200 JST [39712] FATAL:  could not create any TCP/IP sockets
+2022-07-17 17:41:16.200 JST [39712] LOG:  database system is shut down
+2022-07-17 17:42:38.324 JST [39942] FATAL:  pre-existing shared memory block (key 30757928, ID 1703936) is still in use
+2022-07-17 17:42:38.324 JST [39942] HINT:  Terminate any old server processes associated with data directory "/usr/local/var/postgres".
+2022-07-17 17:42:38.324 JST [39942] LOG:  database system is shut down
+2022-07-17 17:47:43.028 JST [43610] LOG:  starting PostgreSQL 14.4 on x86_64-apple-darwin21.5.0, compiled by Apple clang version 13.1.6 (clang-1316.0.21.2.5), 64-bit
+2022-07-17 17:47:43.029 JST [43610] LOG:  could not bind IPv6 address "::1": Address already in use
+2022-07-17 17:47:43.029 JST [43610] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-07-17 17:47:43.029 JST [43610] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2022-07-17 17:47:43.029 JST [43610] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-07-17 17:47:43.029 JST [43610] WARNING:  could not create listen socket for "localhost"
+2022-07-17 17:47:43.029 JST [43610] FATAL:  could not create any TCP/IP sockets
+2022-07-17 17:47:43.030 JST [43610] LOG:  database system is shut down
+2022-07-17 18:15:31.260 JST [3656] LOG:  starting PostgreSQL 14.4 on x86_64-apple-darwin21.5.0, compiled by Apple clang version 13.1.6 (clang-1316.0.21.2.5), 64-bit
+2022-07-17 18:15:31.261 JST [3656] LOG:  could not bind IPv6 address "::1": Address already in use
+2022-07-17 18:15:31.261 JST [3656] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-07-17 18:15:31.261 JST [3656] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2022-07-17 18:15:31.261 JST [3656] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-07-17 18:15:31.261 JST [3656] WARNING:  could not create listen socket for "localhost"
+2022-07-17 18:15:31.261 JST [3656] FATAL:  could not create any TCP/IP sockets
+2022-07-17 18:15:31.262 JST [3656] LOG:  database system is shut down
+2022-07-17 18:18:23.469 JST [5779] FATAL:  lock file "postmaster.pid" already exists
+2022-07-17 18:18:23.469 JST [5779] HINT:  Is another postmaster (PID 5673) running in data directory "/usr/local/var/postgres"?
+2022-07-17 18:20:25.968 JST [6008] FATAL:  lock file "postmaster.pid" already exists
+2022-07-17 18:20:25.968 JST [6008] HINT:  Is another postmaster (PID 5673) running in data directory "/usr/local/var/postgres"?
