@@ -1,2 +1,11 @@
 2022/07/17 22:23:05 main.go:15: test
 2022/07/17 23:19:19 main.go:16: test
+2022/07/18 00:40:02 main.go:16: test
+2022/07/18 00:40:02 users.go:33: sql: converting argument $1 type: unsupported type func() uuid.UUID, a func
+2022/07/18 00:41:48 main.go:16: test
+2022/07/18 00:41:48 users.go:33: sql: converting argument $1 type: unsupported type func() uuid.UUID, a func
+2022/07/18 00:45:47 main.go:16: test
+2022/07/18 00:45:47 users.go:33: sql: converting argument $1 type: unsupported type func() uuid.UUID, a func
+2022/07/18 00:46:00 main.go:16: test
+2022/07/18 00:46:00 users.go:33: sql: converting argument $1 type: unsupported type func() uuid.UUID, a func
+2022/07/18 00:46:15 users.go:33: sql: converting argument $1 type: unsupported type func() uuid.UUID, a func
