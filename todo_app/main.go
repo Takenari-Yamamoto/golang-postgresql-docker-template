@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"hello-module/todo_app/app/models"
 	"hello-module/todo_app/config"
 	"log"
 )
@@ -13,4 +14,6 @@ func main () {
 	fmt.Println(config.Config.LogFile)
 
 	log.Println("test")
+
+	fmt.Println(models.Db)
 }
