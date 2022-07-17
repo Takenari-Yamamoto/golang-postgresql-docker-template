@@ -1,44 +1,26 @@
 package main
 
 import (
-	"context"
 	"fmt"
-	"time"
+	"net/url"
 )
 
-func longProcess(ctx context.Context, ch chan string) {
-	fmt.Println("かいし")
-	time.Sleep(2 * time.Second)
-	fmt.Println("おしまい")
-	ch <- "実行結果"
-}
-
 func main() {
-	// チャネルの作成
-	ch := make(chan string)
+	// u, _ := url.Parse("http://example.com/search?a=1&b=2#top")
+	// fmt.Println(u.Scheme)
+	// fmt.Println(u.Host)
+	// fmt.Println(u.Path)
+	// fmt.Println(u.RawQuery)
+	// fmt.Println(u.Fragment)
 
-	// context の作成
-	ctx := context.Background()
+	url := &url.URL{}
+	url.Scheme = "https:"
+	url.Host = "google.com"
+	q := url.Query()
+	q.Set("q", "Golang")
 
-	ctx, cancel := context.WithTimeout(ctx, 1*time.Second)
+	url.RawQuery = q.Encode()
 
-	defer cancel()
+	fmt.Println(url)
 
-	go longProcess(ctx, ch)
-
-	L:
-		for {
-			select {
-				case <- ctx.Done():
-					fmt.Println("########Error########")
-					fmt.Println(ctx.Err())
-					break L
-				case s := <-ch:
-					fmt.Println(s)
-					fmt.Println("success")
-					break L
-			}
-		}
-
-		fmt.Println("LOOP FIN")
 }
