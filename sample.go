@@ -1,54 +1,44 @@
 package main
 
 import (
-	"encoding/json"
+	"context"
 	"fmt"
-	"log"
 	"time"
 )
 
-type A struct{}
-
-type User struct {
-	ID int `json:"id,omitempty"`
-	Name string `json:"name,omitempty"`
-	Email string `json:"email"`
-	Created time.Time `json:"created"`
-	A *A `json:"A,omitempty"`
-}
-
-func (u User) MarshalJSON() ([]byte, error) {
-	v, err := json.Marshal(&struct {
-		Name string
-	} {
-		Name: "Mr." + u.Name,
-	})
-	return v, err
+func longProcess(ctx context.Context, ch chan string) {
+	fmt.Println("かいし")
+	time.Sleep(2 * time.Second)
+	fmt.Println("おしまい")
+	ch <- "実行結果"
 }
 
 func main() {
+	// チャネルの作成
+	ch := make(chan string)
 
-	u := new(User)
-	u.ID = 1
-	u.Name = "test"
-	u.Email = "example@example.com"
-	u.Created = time.Now()
+	// context の作成
+	ctx := context.Background()
 
-	bs, err := json.Marshal(u)
-	if err != nil {
-		log.Fatal(err)
-	}
+	ctx, cancel := context.WithTimeout(ctx, 1*time.Second)
 
-	fmt.Println(string(bs))
+	defer cancel()
 
-	// json to struct
-	u2 := new(User)
+	go longProcess(ctx, ch)
 
-	if err := json.Unmarshal(bs, &u2); err != nil {
-		fmt.Println(err)
-	}
+	L:
+		for {
+			select {
+				case <- ctx.Done():
+					fmt.Println("########Error########")
+					fmt.Println(ctx.Err())
+					break L
+				case s := <-ch:
+					fmt.Println(s)
+					fmt.Println("success")
+					break L
+			}
+		}
 
-	fmt.Println(u2)
-
-
+		fmt.Println("LOOP FIN")
 }
