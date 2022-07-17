@@ -1,64 +1,33 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
-	"log"
 
 	_ "github.com/lib/pq"
+	"gopkg.in/go-ini/ini.v1"
 )
 
-var Db *sql.DB
-var err error
+// ini
+type ConfigList struct {
+	Port int
+	DbName string
+	SQLDriver string
+}
 
-type Person struct {
-	Name string
-	Age int
+var Config ConfigList
+
+func init () {
+	cfg, _ := ini.Load("config.ini")
+
+	Config = ConfigList {
+		Port: cfg.Section("web").Key("port").MustInt(8080),
+		DbName:  cfg.Section("db").Key("name").MustString("example.sql"),
+		SQLDriver: cfg.Section("db").Key("driver").String(),
+	}
 }
 
 func main() {
-	Db, err = sql.Open("postgres", "user=test_user dbname=testdb password=password sslmode=disable")
-
-	if err != nil {
-		log.Panicln(err)
-	}
-
-	defer Db.Close()
-
-	// Create
-	// cmd := "INSERT INTO persons (name, age) VALUES($1, $2)"
-	// _, err := Db.Exec(cmd, "Nancy", 20)
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
-
-	// Read
-	cmd := "SELECT * FROM persons where age = $1"
-	row := Db.QueryRow(cmd, 20)
-	var p Person
-	err = row.Scan(&p.Name, &p.Age)
-
-	if err != nil {
-		if err == sql.ErrNoRows {
-			log.Println("No row")
-		} else {
-			log.Println(err)
-		}
-	}
-	fmt.Println(p.Name, p.Age)
-
-	cmd =  "SELECT * FROM persons"
-	rows, _ := Db.Query(cmd)
-	defer rows.Close()
-	var pp []Person
-
-	for rows.Next() {
-		var p Person
-		err := rows.Scan(&p.Name, &p.Age)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		pp = append(pp, p)
-	}
-
+	fmt.Printf("Port = %v\n", Config.Port)
+	fmt.Printf("DbName = %v\n", Config.DbName)
+	fmt.Printf("SQLDriver = %v\n", Config.SQLDriver)
 }
