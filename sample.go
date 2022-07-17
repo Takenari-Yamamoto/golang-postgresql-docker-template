@@ -1,41 +1,26 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
+	"text/template"
 )
 
-func main() {
+// type MyHandler struct{}
 
-	// GETメソッド
-	// res, _ := http.Get("https://example.com")
+// func (h *MyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Fprintf(w, "Hello World")
+// }
 
-	// fmt.Println(res.StatusCode)
-	// fmt.Println(res.Proto)
-	// fmt.Println(res.Header["Date"])
-	// fmt.Println(res.Header["Content-Type"])
-	// fmt.Println(res.Request.Method)
-	// fmt.Println(res.Request.URL)
-
-	// defer res.Body.Close()
-	// body, _ := ioutil.ReadAll(res.Body)
-	// fmt.Print(string(body))
-
-	vs := url.Values{}
-
-	vs.Add("id", "1")
-	vs.Add("message", "メッセージ")
-	fmt.Println(vs.Encode())
-
-	res, err := http.PostForm("https://example.com", vs)
+func top(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("tmpl.html")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-	fmt.Print(string(body))
+	t.Execute(w, "Hello World 123!!!")
+}
 
+func main() {
+	http.HandleFunc("/top", top)
+	http.ListenAndServe(":8080", nil)
 }
