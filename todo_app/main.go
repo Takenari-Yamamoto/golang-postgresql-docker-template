@@ -37,6 +37,13 @@ func main () {
 	// user.CreateTodo("First Todo")
 
 	// Todo取得
-	t, _ := models.GetTodo(1)
-	fmt.Println(t)
+	// t, _ := models.GetTodo(1)
+	// fmt.Println(t)
+
+		// Todo作成
+	user, _ := models.GetUser(2)
+	user.CreateTodo("Second Todo")
+
+	todos, _ := models.GetTodos()
+	fmt.Println(todos)
 }
