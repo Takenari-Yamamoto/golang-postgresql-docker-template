@@ -1,5 +1,9 @@
 syntax = "proto3";
 
+package employee;
+
+import "proto/date.proto";
+
 message Employee {
   int32 id = 1;
   string name = 2;
@@ -8,12 +12,13 @@ message Employee {
   // phone_number が複数存在することができる
   repeated string phone_number = 5;
   // キーバリューの形
-  map<string, Project> project = 6;
+  map<string, Company.Project> project = 6;
   // oneof はどれか1つが入ってる
   oneof profile {
     string text = 7;
     Video video = 8;
   }
+  date.Date birthday = 9;
 }
 
 enum Occupation {
@@ -23,5 +28,8 @@ enum Occupation {
   MANAGER = 3;
 }
 
-message Project {}
+message Company {
+  message Project {}
+}
+
 message Video {}
