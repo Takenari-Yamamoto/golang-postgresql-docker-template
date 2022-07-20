@@ -1,1 +1,15 @@
 syntax = "proto3";
+
+message Employee {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+  Occupation occupation = 4;
+}
+
+enum Occupation {
+  OCCUPATION_UNKNOW = 0;
+  ENGINEER = 1;
+  DESIGNER = 2;
+  MANAGER = 3;
+}
