@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package employee;
 
+option go_package = "./pb";
+
 import "proto/date.proto";
 
 message Employee {
