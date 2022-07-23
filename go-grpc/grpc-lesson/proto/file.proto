@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package file;
+
+option go_package = "./pb";
+
+message ListFilesRequest {};
+message ListFilesResponse {
+  repeated string filenames = 1;
+};
+
+service FilesService {
+  rpc ListFiles (ListFilesRequest) returns (ListFilesResponse);
+};
