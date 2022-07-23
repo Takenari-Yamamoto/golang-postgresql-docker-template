@@ -9,6 +9,15 @@ message ListFilesResponse {
   repeated string filenames = 1;
 };
 
+message DownloadRequest {
+  string filename = 1;
+};
+
+message DownloadResponse {
+  bytes data = 1;
+};
+
 service FilesService {
   rpc ListFiles (ListFilesRequest) returns (ListFilesResponse);
+  rpc Dowload (DownloadRequest) returns (stream DownloadResponse);
 };
