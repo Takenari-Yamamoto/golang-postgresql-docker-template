@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type FilesServiceClient interface {
 	ListFiles(ctx context.Context, in *ListFilesRequest, opts ...grpc.CallOption) (*ListFilesResponse, error)
 	Dowload(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (FilesService_DowloadClient, error)
+	Upload(ctx context.Context, opts ...grpc.CallOption) (FilesService_UploadClient, error)
 }
 
 type filesServiceClient struct {
@@ -75,12 +76,47 @@ func (x *filesServiceDowloadClient) Recv() (*DownloadResponse, error) {
 	return m, nil
 }
 
+func (c *filesServiceClient) Upload(ctx context.Context, opts ...grpc.CallOption) (FilesService_UploadClient, error) {
+	stream, err := c.cc.NewStream(ctx, &FilesService_ServiceDesc.Streams[1], "/file.FilesService/Upload", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &filesServiceUploadClient{stream}
+	return x, nil
+}
+
+type FilesService_UploadClient interface {
+	Send(*UploadRequest) error
+	CloseAndRecv() (*UploadResponse, error)
+	grpc.ClientStream
+}
+
+type filesServiceUploadClient struct {
+	grpc.ClientStream
+}
+
+func (x *filesServiceUploadClient) Send(m *UploadRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *filesServiceUploadClient) CloseAndRecv() (*UploadResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(UploadResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // FilesServiceServer is the server API for FilesService service.
 // All implementations must embed UnimplementedFilesServiceServer
 // for forward compatibility
 type FilesServiceServer interface {
 	ListFiles(context.Context, *ListFilesRequest) (*ListFilesResponse, error)
 	Dowload(*DownloadRequest, FilesService_DowloadServer) error
+	Upload(FilesService_UploadServer) error
 	mustEmbedUnimplementedFilesServiceServer()
 }
 
@@ -93,6 +129,9 @@ func (UnimplementedFilesServiceServer) ListFiles(context.Context, *ListFilesRequ
 }
 func (UnimplementedFilesServiceServer) Dowload(*DownloadRequest, FilesService_DowloadServer) error {
 	return status.Errorf(codes.Unimplemented, "method Dowload not implemented")
+}
+func (UnimplementedFilesServiceServer) Upload(FilesService_UploadServer) error {
+	return status.Errorf(codes.Unimplemented, "method Upload not implemented")
 }
 func (UnimplementedFilesServiceServer) mustEmbedUnimplementedFilesServiceServer() {}
 
@@ -146,6 +185,32 @@ func (x *filesServiceDowloadServer) Send(m *DownloadResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _FilesService_Upload_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(FilesServiceServer).Upload(&filesServiceUploadServer{stream})
+}
+
+type FilesService_UploadServer interface {
+	SendAndClose(*UploadResponse) error
+	Recv() (*UploadRequest, error)
+	grpc.ServerStream
+}
+
+type filesServiceUploadServer struct {
+	grpc.ServerStream
+}
+
+func (x *filesServiceUploadServer) SendAndClose(m *UploadResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *filesServiceUploadServer) Recv() (*UploadRequest, error) {
+	m := new(UploadRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // FilesService_ServiceDesc is the grpc.ServiceDesc for FilesService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -163,6 +228,11 @@ var FilesService_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "Dowload",
 			Handler:       _FilesService_Dowload_Handler,
 			ServerStreams: true,
+		},
+		{
+			StreamName:    "Upload",
+			Handler:       _FilesService_Upload_Handler,
+			ClientStreams: true,
 		},
 	},
 	Metadata: "proto/file.proto",
