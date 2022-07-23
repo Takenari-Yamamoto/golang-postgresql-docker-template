@@ -25,6 +25,7 @@ type FilesServiceClient interface {
 	ListFiles(ctx context.Context, in *ListFilesRequest, opts ...grpc.CallOption) (*ListFilesResponse, error)
 	Dowload(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (FilesService_DowloadClient, error)
 	Upload(ctx context.Context, opts ...grpc.CallOption) (FilesService_UploadClient, error)
+	UploadAndNotifyProgress(ctx context.Context, opts ...grpc.CallOption) (FilesService_UploadAndNotifyProgressClient, error)
 }
 
 type filesServiceClient struct {
@@ -110,6 +111,37 @@ func (x *filesServiceUploadClient) CloseAndRecv() (*UploadResponse, error) {
 	return m, nil
 }
 
+func (c *filesServiceClient) UploadAndNotifyProgress(ctx context.Context, opts ...grpc.CallOption) (FilesService_UploadAndNotifyProgressClient, error) {
+	stream, err := c.cc.NewStream(ctx, &FilesService_ServiceDesc.Streams[2], "/file.FilesService/UploadAndNotifyProgress", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &filesServiceUploadAndNotifyProgressClient{stream}
+	return x, nil
+}
+
+type FilesService_UploadAndNotifyProgressClient interface {
+	Send(*UploadAndNotifyProgressRequest) error
+	Recv() (*UploadAndNotifyProgressResponse, error)
+	grpc.ClientStream
+}
+
+type filesServiceUploadAndNotifyProgressClient struct {
+	grpc.ClientStream
+}
+
+func (x *filesServiceUploadAndNotifyProgressClient) Send(m *UploadAndNotifyProgressRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *filesServiceUploadAndNotifyProgressClient) Recv() (*UploadAndNotifyProgressResponse, error) {
+	m := new(UploadAndNotifyProgressResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // FilesServiceServer is the server API for FilesService service.
 // All implementations must embed UnimplementedFilesServiceServer
 // for forward compatibility
@@ -117,6 +149,7 @@ type FilesServiceServer interface {
 	ListFiles(context.Context, *ListFilesRequest) (*ListFilesResponse, error)
 	Dowload(*DownloadRequest, FilesService_DowloadServer) error
 	Upload(FilesService_UploadServer) error
+	UploadAndNotifyProgress(FilesService_UploadAndNotifyProgressServer) error
 	mustEmbedUnimplementedFilesServiceServer()
 }
 
@@ -132,6 +165,9 @@ func (UnimplementedFilesServiceServer) Dowload(*DownloadRequest, FilesService_Do
 }
 func (UnimplementedFilesServiceServer) Upload(FilesService_UploadServer) error {
 	return status.Errorf(codes.Unimplemented, "method Upload not implemented")
+}
+func (UnimplementedFilesServiceServer) UploadAndNotifyProgress(FilesService_UploadAndNotifyProgressServer) error {
+	return status.Errorf(codes.Unimplemented, "method UploadAndNotifyProgress not implemented")
 }
 func (UnimplementedFilesServiceServer) mustEmbedUnimplementedFilesServiceServer() {}
 
@@ -211,6 +247,32 @@ func (x *filesServiceUploadServer) Recv() (*UploadRequest, error) {
 	return m, nil
 }
 
+func _FilesService_UploadAndNotifyProgress_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(FilesServiceServer).UploadAndNotifyProgress(&filesServiceUploadAndNotifyProgressServer{stream})
+}
+
+type FilesService_UploadAndNotifyProgressServer interface {
+	Send(*UploadAndNotifyProgressResponse) error
+	Recv() (*UploadAndNotifyProgressRequest, error)
+	grpc.ServerStream
+}
+
+type filesServiceUploadAndNotifyProgressServer struct {
+	grpc.ServerStream
+}
+
+func (x *filesServiceUploadAndNotifyProgressServer) Send(m *UploadAndNotifyProgressResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *filesServiceUploadAndNotifyProgressServer) Recv() (*UploadAndNotifyProgressRequest, error) {
+	m := new(UploadAndNotifyProgressRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // FilesService_ServiceDesc is the grpc.ServiceDesc for FilesService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -232,6 +294,12 @@ var FilesService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "Upload",
 			Handler:       _FilesService_Upload_Handler,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "UploadAndNotifyProgress",
+			Handler:       _FilesService_UploadAndNotifyProgress_Handler,
+			ServerStreams: true,
 			ClientStreams: true,
 		},
 	},
