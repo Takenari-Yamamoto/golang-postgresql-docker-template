@@ -10,28 +10,4 @@ message Employee {
   int32 id = 1;
   string name = 2;
   string email = 3;
-  Occupation occupation = 4;
-  // phone_number が複数存在することができる
-  repeated string phone_number = 5;
-  // キーバリューの形
-  map<string, Company.Project> project = 6;
-  // oneof はどれか1つが入ってる
-  oneof profile {
-    string text = 7;
-    Video video = 8;
-  }
-  date.Date birthday = 9;
 }
-
-enum Occupation {
-  OCCUPATION_UNKNOW = 0;
-  ENGINEER = 1;
-  DESIGNER = 2;
-  MANAGER = 3;
-}
-
-message Company {
-  message Project {}
-}
-
-message Video {}
