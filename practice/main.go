@@ -2,35 +2,25 @@ package main
 
 import "fmt"
 
-type Stringfy interface {
-	ToString() string
+type MyError struct {
+	Message string
+	ErrCode int
 }
 
-type Person struct {
-	Name string
-	Age int
+func (e *MyError) Error() string {
+	return e.Message
 }
 
-func (p *Person) ToString() string {
-	return fmt.Sprintf("Name=%v, Age=%v", p.Name, p.Age)
-}
-
-type Car struct {
-	Number string
-	Model string
-}
-
-func (c Car) ToString() string {
-	return fmt.Sprintf("Number=%v, Model=%v", c.Number, c.Model)
+func RaiseError() error {
+	return &MyError{Message: "カスタムエラーデス", ErrCode: 12341234}
 }
 
 func main() {
-	vs := []Stringfy {
-		&Person{Name: "Taro", Age: 20},
-		&Car{Number: "123-456", Model: "AB-124"},
-	}
+	err := RaiseError()
+	fmt.Println(err.Error())
 
-	for _, v := range vs {
-		fmt.Println(v.ToString())
+	e, ok := err.(*MyError)
+	if ok {
+		fmt.Println(e.ErrCode)
 	}
 }
