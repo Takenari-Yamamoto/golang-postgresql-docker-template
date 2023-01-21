@@ -2,27 +2,37 @@ package main
 
 import "fmt"
 
-type T struct {
-	User User
-}
-
 type User struct {
 	Name string
 	Age int
 }
 
-func (u User) SayName() {
-	fmt.Println(u.Name)
-}
+type Users []*User
 
-func (u *User) SetName(name string) {
-	u.Name = name
+func NewUser(name string, age int) *User {
+	return &User{Name: name, Age: age}
 }
 
 func main() {
-	user1 := User{Name: "Take"}
-	user1.SayName()
+	user1 := User{Name: "User1", Age: 10}
+	user2 := User{Name: "User2", Age: 20}
+	user3 := User{Name: "User3", Age: 30}
+	user4 := User{Name: "User4", Age: 40}
 
-	user1.SetName("SAKE")
-	user1.SayName()
+	users := Users{}
+
+	users = append(users, &user1, &user2, &user3, &user4)
+
+	fmt.Println(users)
+
+	for _, u := range users {
+		fmt.Println(u)
+	}
+
+	users2 := make([]*User, 0)
+	users2 = append(users, &user1, &user2, &user3, &user4)
+
+	for _, u := range users2 {
+		fmt.Println(*u)
+	}
 }
