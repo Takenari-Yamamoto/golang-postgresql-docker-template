@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/go/Dockerfile
+    container_name: golang
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./backend:/app
