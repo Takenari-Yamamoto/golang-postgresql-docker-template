@@ -1,0 +1,8 @@
+[psql]
+  dbname = "golang_postgres"
+  host   = "db"
+  port   = 5432
+  user   = "postgres"
+  pass   = "password"
+  sslmode = "disable"
+  schema = "public"
