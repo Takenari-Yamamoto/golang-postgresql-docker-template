@@ -1,3 +1,8 @@
+## 起動
+```
+docker-compose -d up
+```
+
 ## マイグレーション
 
 ### migration 作成
