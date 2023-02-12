@@ -7,6 +7,9 @@ services:
       dockerfile: ./docker/go/Dockerfile
     container_name: golang
     tty: true
+    command: ['go', 'run', 'cmd/main.go']
+    ports:
+      - '8080:8080'
     working_dir: /app
     volumes:
       - ./backend:/app
