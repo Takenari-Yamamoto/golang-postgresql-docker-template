@@ -35,13 +35,15 @@ func (repo *TodoRepo) FindById(id string) (*gql.Todo, error) {
 
 
 func (repo *TodoRepo) GetAll() ([]*gql.Todo, error) {
-db, err := database.NewDb()
+	db, err := database.NewDb()
+
 	if err != nil {
 		fmt.Println("エラーだよ",err)
 		return nil, err
 	}
 	todos, err := models.Todos().All(context.Background(), db)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
