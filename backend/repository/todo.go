@@ -17,7 +17,7 @@ func NewTodoRepository() *TodoRepo {
 	return &TodoRepo{}
 }
 
-func (repo *TodoRepo) FindById(id string) (*models.Todo, error) {
+func (repo *TodoRepo) FindById(id string) (*gql.Todo, error) {
 	db, err := database.NewDb()
 	if err != nil {
 		fmt.Println("エラーだよ",err)
@@ -30,11 +30,11 @@ func (repo *TodoRepo) FindById(id string) (*models.Todo, error) {
 		return nil, err
 	}
 
-	return todo, nil
+	return convModelToGql(todo), nil
 }
 
 
-func (repo *TodoRepo) GetAll() (models.TodoSlice, error) {
+func (repo *TodoRepo) GetAll() ([]*gql.Todo, error) {
 db, err := database.NewDb()
 	if err != nil {
 		fmt.Println("エラーだよ",err)
@@ -45,10 +45,15 @@ db, err := database.NewDb()
 		return nil, err
 	}
 
-	return todos, nil
+	var gqlTodos []*gql.Todo
+	for _, t := range todos {
+		gqlTodos = append(gqlTodos, convModelToGql(t))
+	}
+
+	return gqlTodos, nil
 }
 
-func (repo *TodoRepo) Insert(title, content string) (*models.Todo, error) {
+func (repo *TodoRepo) Insert(title, content string) (*gql.Todo, error) {
 	db, err := database.NewDb()
 	if err != nil {
 		fmt.Println("エラーだよ",err)
@@ -65,9 +70,13 @@ func (repo *TodoRepo) Insert(title, content string) (*models.Todo, error) {
 		return nil, err
 	}
 
-	return todo, nil
+	return convModelToGql(&todo), nil
 }
 
-func convModelToGql(*models.Todo) *gql.Todo {
-
+func convModelToGql(t *models.Todo) *gql.Todo {
+	return &gql.Todo{
+		ID: t.ID,
+		Title: t.Title,
+		Content: t.Content,
+	}
 }

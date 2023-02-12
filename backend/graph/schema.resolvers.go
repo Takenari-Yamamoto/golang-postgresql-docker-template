@@ -10,9 +10,8 @@ import (
 )
 
 // CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	res, err := r.TodoRepository.Insert("", "content")
-	return r.TodoRepository.Insert("", "content")
+func (r *mutationResolver) CreateTodo(ctx context.Context, title, content string) (*model.Todo, error) {
+	return r.TodoRepository.Insert(title, content)
 }
 
 // Todos is the resolver for the todos field.

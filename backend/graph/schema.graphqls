@@ -18,5 +18,5 @@ input NewTodo {
 }
 
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  createTodo(title: String!, content: String!): Todo!
 }
