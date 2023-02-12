@@ -2,8 +2,10 @@
 
 ### migration 作成
 
+コンテナの中で
+
 ```
-migrate create -ext sql -dir database/migrations -seq create_テーブル名_table
+migrate create -ext sql -dir database/migrations -seq テーブル名
 ```
 
 ### migrate up
@@ -28,4 +30,14 @@ sqlboiler psql --output database/models --pkgname models --wipe
 
 ```
 $ go run github.com/99designs/gqlgen@latest generate
+```
+
+### PostgreSQL
+
+```
+psql -p 5432 -U postgres
+```
+
+```
+migrate create -ext sql -dir database/migrations -seq create_location_table
 ```

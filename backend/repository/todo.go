@@ -53,7 +53,7 @@ db, err := database.NewDb()
 	return gqlTodos, nil
 }
 
-func (repo *TodoRepo) Insert(title, content string) (*gql.Todo, error) {
+func (repo *TodoRepo) Insert(ctx context.Context,title, content string) (*gql.Todo, error) {
 	db, err := database.NewDb()
 	if err != nil {
 		fmt.Println("エラーだよ",err)
@@ -66,7 +66,8 @@ func (repo *TodoRepo) Insert(title, content string) (*gql.Todo, error) {
 		Title: title,
 		Content: content,
 	}
-	if err := todo.Insert(context.Background(), db, boil.Infer()); err != nil {
+	if err := todo.Insert(ctx, db, boil.Infer()); err != nil {
+		fmt.Println("エラーだよ",err)
 		return nil, err
 	}
 
