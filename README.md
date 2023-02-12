@@ -26,7 +26,7 @@ migrate -database postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-pas
 sqlboiler psql --output database/models --pkgname models --wipe
 ```
 
-### スキーマ生成
+### GraphQL スキーマ生成
 
 ```
 $ go run github.com/99designs/gqlgen@latest generate
