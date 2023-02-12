@@ -5,11 +5,16 @@ services:
     build:
       context: .
       dockerfile: ./docker/go/Dockerfile
-    container_name: golang
+    container_name: gql-server
     tty: true
     working_dir: /app
+    depends_on:
+      - db
     volumes:
       - ./backend:/app
+    command: ['go', 'run', 'cmd/main.go']
+    ports:
+      - '8080:8080'
 
   db:
     image: postgres:15

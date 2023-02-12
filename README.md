@@ -7,8 +7,10 @@ docker-compose -d up
 
 ### migration 作成
 
+コンテナの中で
+
 ```
-migrate create -ext sql -dir database/migrations -seq create_テーブル名_table
+migrate create -ext sql -dir database/migrations -seq テーブル名
 ```
 
 ### migrate up
@@ -27,4 +29,20 @@ migrate -database postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-pas
 
 ```
 sqlboiler psql --output database/models --pkgname models --wipe
+```
+
+### GraphQL スキーマ生成
+
+```
+$ go run github.com/99designs/gqlgen@latest generate
+```
+
+### PostgreSQL
+
+```
+psql -p 5432 -U postgres
+```
+
+```
+migrate create -ext sql -dir database/migrations -seq create_location_table
 ```
