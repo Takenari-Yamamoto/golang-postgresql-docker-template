@@ -3,7 +3,7 @@ name: deploy actions
 
 on:
   push:
-    branches: main
+    branches: feat/github_actions
 
 jobs:
   build:
